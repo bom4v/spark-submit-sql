@@ -213,19 +213,19 @@ model contains 8 documentable templates
   + Locally (`package` command):
 ```bash
 $ ls -laFh target/scala-2.11/sql-to-csv-spark_2.11-0.0.1.jar 
--rw-r--r-- 1 SIMSID SIMSID 4.4K Feb 13 12:16 target/scala-2.11/sql-to-csv-spark_2.11-0.0.1.jar
+-rw-r--r-- 1 USER GROUP 4.4K Feb 13 12:16 target/scala-2.11/sql-to-csv-spark_2.11-0.0.1.jar
 ```
 
   + In the local Maven repository (`publishM2` task):
 ```bash
-$ ls -laFh ~/.m2/repository/com/dbschenker/gdsa/sql-to-csv-spark_2.11/0.0.1/sql-to-csv-spark_2.11-0.0.1.jar
--rw-r--r-- 1 SIMSID SIMSID 4.4K Feb 13 12:16 ~/.m2/repository/com/dbschenker/gdsa/sql-to-csv-spark_2.11/0.0.1/sql-to-csv-spark_2.11-0.0.1.jar
+$ ls -laFh ~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1/sql-to-csv-spark_2.11-0.0.1.jar
+-rw-r--r-- 1 USER GROUP 4.4K Feb 13 12:16 ~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1/sql-to-csv-spark_2.11-0.0.1.jar
 ```
 
   + In the local Ivy2 repository (`publishLocal` task):
 ```bash
-$ ls -laFh ~/.ivy2/local/com.dbschenker.gdsa/sql-to-csv-spark_2.11/0.0.1/jars/sql-to-csv-spark_2.11.jar
--rw-r--r-- 1 SIMSID SIMSID 4.4K Feb 13 12:16 ~/.ivy2/local/com.dbschenker.gdsa/sql-to-csv-spark_2.11/0.0.1/jars/sql-to-csv-spark_2.11.jar
+$ ls -laFh ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1/jars/sql-to-csv-spark_2.11.jar
+-rw-r--r-- 1 USER GROUP 4.4K Feb 13 12:16 ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1/jars/sql-to-csv-spark_2.11.jar
 ```
 
 * Launch the job in the SBT JVM (the
