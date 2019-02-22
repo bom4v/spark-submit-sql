@@ -58,7 +58,6 @@ object SparkClusterQueryLauncher extends App {
   // CSV data file, from HDFS
   val hdfsDataDir = "incoming"
   val defaultCSVFilename = "hive-generic.csv"
-  val hdfsDataFilepath = hdfsDataDir + "/" + defaultCSVFilename
 
   // File in which the SQL query is specified
   val defaultQueryFile = "requests/hive-sql-to-csv-01-test.sql"
@@ -73,7 +72,8 @@ object SparkClusterQueryLauncher extends App {
   // Retrieve the expected filename of the resulting CSV file,
   // if given as command line parameter
   val outputCSVFile = Utilities.getOutputCSVFilePath (defaultCSVFilename, args)
-  println ("File-path for the expected CSV file: " + outputCSVFile)
+  val hdfsDataFilepath = hdfsDataDir + "/" + outputCSVFile
+  println ("(HDFS) File-path for the expected CSV file: " + hdfsDataFilepath)
 
   // Extract the SQL query from the given file
   val sqlQuery = Utilities.extractQuery (queryFile)

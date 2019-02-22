@@ -179,6 +179,10 @@ select 1 as testFlag
 _EOF
 $ spark-submit --master yarn --deploy-mode client --class org.bom4v.ti.StandaloneQueryLauncher sql-to-csv-spark_2.11-0.0.1.jar sqlQuery.sql output.csv
 $ spark-submit --master yarn --deploy-mode client --class org.bom4v.ti.SparkClusterQueryLauncher sql-to-csv-spark_2.11-0.0.1.jar sqlQuery.sql output.csv
+$ hdfs dfs -get incoming/output.csv
+$ hdfs dfs -rm -skipTrash incoming/output.csv
+$ cat output.csv
+1
 ```
 
 # Use the Scala library
