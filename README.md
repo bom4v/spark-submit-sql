@@ -15,7 +15,7 @@ CLI/client tools such as
 [MySQL CLI (`mysql`)](https://dev.mysql.com/doc/refman/8.0/en/mysql.html),
 [Postgre CLI (`psql`)](https://www.postgresql.org/docs/current/app-psql.html),
 [MS SQL CLI (`bcp`)](https://docs.microsoft.com/en-us/sql/tools/bcp-utility) and
-[Oracle SQL*Plus (`sqlplus`)](https://docs.oracle.com/cd/B10501_01/server.920/a90842/ch13.htm).
+[Oracle `SQL*Plus` (`sqlplus`)](https://docs.oracle.com/cd/B10501_01/server.920/a90842/ch13.htm).
 
 It means that this Spark utility:
 * Takes as input parameter the (local) path of a SQL query script
@@ -45,6 +45,15 @@ tools:
   on the number of records that can be extracted from the Hive database
 
 # Installation
+
+## Short version
+Just add the dependency on `sql-to-csv-spark` in the SBT project
+configuration (typically, `build.sbt` in the project root directory):
+```scala
+libraryDependencies += "org.bom4v.ti" %% "sql-to-csv-spark" % "0.0.1"
+```
+
+## Details
 A convenient way to get the Spark ecosystem and CLI tools (_e.g._,
 `spark-submit`, `spark-shell`, `spark-sql`, `beeline`, `pyspark` and `sparkR`)
 is through
@@ -155,9 +164,36 @@ To activate this project's virtualenv, run pipenv shell.
 Alternatively, run a command inside the virtualenv with pipenv run.
 ```
 
-# Spark Scala
+# Use the command-line script
+* Download the application JAR artefact from a
+  [Maven repository](https://repo1.maven.org/maven2/):
+```bash
+$ wget https://oss.sonatype.org/content/groups/public/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1/sql-to-csv-spark_2.11-0.0.1.jar
+```
 
-## Simple test
+* Launch the JAR application by specifying the input file with the SQL query
+  and the output CSV file:
+```bash
+$ cat > sqlQuery.sql << _EOF
+select 1 as testFlag
+_EOF
+$ spark-submit --master yarn --deploy-mode client --class org.bom4v.ti.StandaloneQueryLauncher sql-to-csv-spark_2.11-0.0.1.jar sqlQuery.sql output.csv
+$ spark-submit --master yarn --deploy-mode client --class org.bom4v.ti.SparkClusterQueryLauncher sql-to-csv-spark_2.11-0.0.1.jar sqlQuery.sql output.csv
+```
+
+# Use the Scala library
+* Write a program like:
+```bash
+$ mkdir -p src/main/scala/myorg
+$ cat > src/main/scala/myorg/Demonstrator.scala << _EOF
+import org.bom4v.ti
+
+_EOF
+```
+
+# Contribute to that project
+
+### Simple test
 * Compile and package the SQL-based data extractor:
 ```bash
 $ sbt 'set isSnapshot := true' compile package publishM2 publishLocal

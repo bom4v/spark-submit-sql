@@ -16,7 +16,23 @@ description := "From SQL queries to CSV files with native Spark jobs (in Scala a
 
 licenses += "Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0")
 
-useGpg := true
+scmInfo := Some(
+  ScmInfo(
+    url("https://github.com/bom4v/spark-submit-sql"),
+    "https://github.com/bom4v/spark-submit-sql.git"
+  )
+)
+
+developers := List(
+  Developer(
+    id    = "denis.arnaud",
+    name  = "Denis Arnaud",
+    email = "denis.arnaud_ossrh@m4x.org",
+    url   = url("https://github.com/denisarnaud")
+  )
+)
+
+//useGpg := true
 
 scalaVersion := "2.11.12"
 
@@ -35,26 +51,19 @@ libraryDependencies += "org.apache.spark" %% "spark-sql" % sparkVersion
 libraryDependencies += "org.apache.spark" %% "spark-mllib" % sparkVersion
 libraryDependencies += "org.apache.spark" %% "spark-hive" % sparkVersion
 
-resolvers ++= Seq(
-  Resolver.sonatypeRepo("releases"),
-  Resolver.sonatypeRepo("snaspshots")
-)
-// "Local repository"     at "http://localhost/mavenrepo/",
-// Resolver.mavenLocal
-
 javacOptions in Compile ++= Seq("-source", "1.8",  "-target", "1.8")
 
 scalacOptions ++= Seq("-deprecation", "-feature")
 
-publishTo := Some("Local Maven Repo" at "http://localhost/mavenrepo/")
+pomIncludeRepository := { _ => false }
 
-pomExtra := (
-  <scm>
-    <url>https://github.com/bom4v/spark-submit-sql/tree/master</url>
-    <connection>scm:git:git://github.com/bom4v/spark-submit-sql.git</connection>
-    <developerConnection>scm:git:ssh://github.com:bom4v/spark-submit-sql.git</developerConnection>
-  </scm>
-)
+publishTo := {
+  val nexus = "https://oss.sonatype.org/"
+  if (isSnapshot.value) Some("snapshots" at nexus + "content/repositories/snapshots")
+  else Some("releases" at nexus + "service/local/staging/deploy/maven2")
+}
+
+publishMavenStyle := true
 
 cleanKeepFiles += target.value / "test-reports"
 
