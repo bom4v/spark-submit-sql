@@ -353,14 +353,20 @@ Scala: version 2.11.8
 19/02/14 10:45:22 INFO ShutdownHookManager: Shutdown hook called
 ```
 
-* Check the resulting CSV file:
+* Check the resulting (compressed) CSV file.
+  On recent versions of Hadoop (_e.g._, 3.1.1), the data files produced
+  by Spark are compressed (deflated in Hadoop parlance). After the merge
+  process, they have to be uncompressed (inflated) before they can be read
+  by a human being. An easy way to uncompress files is shown below thanks
+  to Perl (inspired from a
+  [post on StackOverflow](https://stackoverflow.com/questions/18759142/how-to-read-a-deflate-file-in-hadoop)):
 ```bash
 $ hdfs dfs -ls -h incoming/hive-generic.csv
 Found 1 items
 -rw-r--r--   3 USER GROUP  59 B 2019-02-14 13:27 incoming/hive-generic.csv
-$ hdfs dfs -tail incoming/hive-generic.csv
+$ hdfs dfs -tail incoming/hive-generic.csv|perl -MCompress::Zlib -e 'undef $/; print uncompress(<>)'
 1
-$ hdfs dfs -cat incoming/hive-generic.csv|wc -l
+$ hdfs dfs -cat incoming/hive-generic.csv|perl -MCompress::Zlib -e 'undef $/; print uncompress(<>)'|wc -l
 1
 ```
 
