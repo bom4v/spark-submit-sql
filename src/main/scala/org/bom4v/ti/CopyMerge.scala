@@ -1,4 +1,7 @@
 // Reference: https://stackoverflow.com/a/50545815/798053
+
+package org.bom4v.ti
+
 import scala.util.Try
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.{FileSystem, Path}

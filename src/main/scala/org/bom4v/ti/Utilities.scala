@@ -68,10 +68,10 @@ object Utilities {
     // into the new output
     val hadoopConfig = new org.apache.hadoop.conf.Configuration()
     val hdfs = org.apache.hadoop.fs.FileSystem.get (hadoopConfig)
-    org.apache.hadoop.fs.FileUtil
+    UtilityForHadoop3
       .copyMerge (hdfs, new org.apache.hadoop.fs.Path (srcPath),
       hdfs, new org.apache.hadoop.fs.Path (dstPath),
-      true, hadoopConfig, null)
+      true, hadoopConfig)
   }
 
   /**

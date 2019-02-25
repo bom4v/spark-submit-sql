@@ -45,7 +45,7 @@ libraryDependencies += "com.github.nscala-time" %% "nscala-time" % "2.22.0"
 libraryDependencies += "org.specs2" %% "specs2-core" % "4.4.1" % "test"
 
 // Spark
-val sparkVersion = "2.2.0"
+val sparkVersion = "2.3.2"
 libraryDependencies += "org.apache.spark" %% "spark-core" % sparkVersion
 libraryDependencies += "org.apache.spark" %% "spark-sql" % sparkVersion
 libraryDependencies += "org.apache.spark" %% "spark-mllib" % sparkVersion
