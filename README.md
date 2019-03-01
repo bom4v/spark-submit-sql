@@ -24,7 +24,7 @@ It means that this Spark utility:
 * Executes the SQL qeury on the Spark cluster through a direct
   `spark-submit` call (as opposed to
   [a call to either JDBC/ODBC connector
-  or through the Thrift protocol](https://spark.apache.org/docs/2.2.0/sql-programming-guide.html#distributed-sql-engine))
+  or through the Thrift protocol](https://spark.apache.org/docs/2.3.2/sql-programming-guide.html#distributed-sql-engine))
 
 For some reason, there does not seem to exist such tools (as of beginning
 of 2019), though the Spark ecosystem of course provides various SQL-related
@@ -33,7 +33,7 @@ tools:
   [CLI utility](https://spark.apache.org/docs/latest/sql-distributed-sql-engine.html#running-the-spark-sql-cli),
   namely `spark-sql`, but which does not provide a way to execute queries
   from SQL script files and to generate the corresponding CSV files
-* [PySpark Beeline CLI](https://spark.apache.org/docs/2.2.0/sql-programming-guide.html#distributed-sql-engine),
+* [PySpark Beeline CLI](https://spark.apache.org/docs/2.3.2/sql-programming-guide.html#distributed-sql-engine),
   which allows to extract CSV data files from SQL queries,
   but which uses the Thrift protocol through JDBC/ODBC connectors,
   therefore imposing some constraints and limits, for instance on the
@@ -50,7 +50,7 @@ tools:
 Just add the dependency on `sql-to-csv-spark` in the SBT project
 configuration (typically, `build.sbt` in the project root directory):
 ```scala
-libraryDependencies += "org.bom4v.ti" %% "sql-to-csv-spark" % "0.0.1"
+libraryDependencies += "org.bom4v.ti" %% "sql-to-csv-spark" % "0.0.1-spark2.3"
 ```
 
 ## Details
@@ -168,7 +168,7 @@ Alternatively, run a command inside the virtualenv with pipenv run.
 * Download the application JAR artefact from a
   [Maven repository](https://repo1.maven.org/maven2/):
 ```bash
-$ wget https://oss.sonatype.org/content/groups/public/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1/sql-to-csv-spark_2.11-0.0.1.jar
+$ wget https://oss.sonatype.org/content/groups/public/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/sql-to-csv-spark_2.11-0.0.1-spark2.3.jar
 ```
 
 * Launch the JAR application by specifying the input file with the SQL query
@@ -177,8 +177,8 @@ $ wget https://oss.sonatype.org/content/groups/public/org/bom4v/ti/sql-to-csv-sp
 $ cat > sqlQuery.sql << _EOF
 select 1 as testFlag
 _EOF
-$ spark-submit --master yarn --deploy-mode client --class org.bom4v.ti.StandaloneQueryLauncher sql-to-csv-spark_2.11-0.0.1.jar sqlQuery.sql output.csv
-$ spark-submit --master yarn --deploy-mode client --class org.bom4v.ti.SparkClusterQueryLauncher sql-to-csv-spark_2.11-0.0.1.jar sqlQuery.sql output.csv
+$ spark-submit --master yarn --deploy-mode client --class org.bom4v.ti.StandaloneQueryLauncher sql-to-csv-spark_2.11-0.0.1-spark2.3.jar sqlQuery.sql output.csv
+$ spark-submit --master yarn --deploy-mode client --class org.bom4v.ti.SparkClusterQueryLauncher sql-to-csv-spark_2.11-0.0.1-spark2.3.jar sqlQuery.sql output.csv
 $ hdfs dfs -get incoming/output.csv
 $ hdfs dfs -rm -skipTrash incoming/output.csv
 $ cat output.csv
@@ -209,40 +209,40 @@ $ sbt 'set isSnapshot := true' compile package publishM2 publishLocal
 [info] Done compiling.
 [success] Total time: 10 s, completed Feb 18, 2019 7:58:17 PM
 [warn] Multiple main classes detected.  Run 'show discoveredMainClasses' to see the list
-[info] Packaging ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.1.jar ...
+[info] Packaging ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-spark2.3.jar ...
 [info] Done packaging.
 [success] Total time: 1 s, completed Feb 18, 2019 7:58:18 PM
-[info] Packaging ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-sources.jar ...
+[info] Packaging ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-spark2.3-sources.jar ...
 [info] Done packaging.
-[info] Wrote ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.1.pom
+[info] Wrote ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-spark2.3.pom
 [info] Main Scala API documentation to ~/dev/infra/spark-submit-sql/target/scala-2.11/api...
 model contains 8 documentable templates
 [info] Main Scala API documentation successful.
-[info] Packaging ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-javadoc.jar ...
+[info] Packaging ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-spark2.3-javadoc.jar ...
 [info] Done packaging.
-[info] 	published sql-to-csv-spark_2.11 to file:~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1/sql-to-csv-spark_2.11-0.0.1.pom
-[info] 	published sql-to-csv-spark_2.11 to file:~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1/sql-to-csv-spark_2.11-0.0.1.jar
-[info] 	published sql-to-csv-spark_2.11 to file:~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1/sql-to-csv-spark_2.11-0.0.1-sources.jar
-[info] 	published sql-to-csv-spark_2.11 to file:~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1/sql-to-csv-spark_2.11-0.0.1-javadoc.jar
+[info] 	published sql-to-csv-spark_2.11 to file:~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/sql-to-csv-spark_2.11-0.0.1-spark2.3.pom
+[info] 	published sql-to-csv-spark_2.11 to file:~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/sql-to-csv-spark_2.11-0.0.1-spark2.3.jar
+[info] 	published sql-to-csv-spark_2.11 to file:~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/sql-to-csv-spark_2.11-0.0.1-spark2.3-sources.jar
+[info] 	published sql-to-csv-spark_2.11 to file:~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/sql-to-csv-spark_2.11-0.0.1-spark2.3-javadoc.jar
 [success] Total time: 2 s, completed Feb 18, 2019 7:58:19 PM
-[info] Wrote ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.1.pom
+[info] Wrote ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-spark2.3.pom
 [info] Main Scala API documentation to ~/dev/infra/spark-submit-sql/target/scala-2.11/api...
 model contains 8 documentable templates
 [info] Main Scala API documentation successful.
-[info] Packaging ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-javadoc.jar ...
+[info] Packaging ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-spark2.3-javadoc.jar ...
 [info] Done packaging.
-[info] :: delivering :: org.bom4v.ti#sql-to-csv-spark_2.11;0.0.1 :: 0.0.1 :: integration :: Mon Feb 18 19:58:21 CET 2019
-[info] 	delivering ivy file to ~/dev/infra/spark-submit-sql/target/scala-2.11/ivy-0.0.1.xml
-[info] 	published sql-to-csv-spark_2.11 to ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1/poms/sql-to-csv-spark_2.11.pom
-[info] 	published sql-to-csv-spark_2.11 to ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1/jars/sql-to-csv-spark_2.11.jar
-[info] 	published sql-to-csv-spark_2.11 to ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1/srcs/sql-to-csv-spark_2.11-sources.jar
-[info] 	published sql-to-csv-spark_2.11 to ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1/docs/sql-to-csv-spark_2.11-javadoc.jar
-[info] 	published ivy to ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1/ivys/ivy.xml
+[info] :: delivering :: org.bom4v.ti#sql-to-csv-spark_2.11;0.0.1-spark2.3 :: 0.0.1-spark2.3 :: integration :: Mon Feb 18 19:58:21 CET 2019
+[info] 	delivering ivy file to ~/dev/infra/spark-submit-sql/target/scala-2.11/ivy-0.0.1-spark2.3.xml
+[info] 	published sql-to-csv-spark_2.11 to ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/poms/sql-to-csv-spark_2.11.pom
+[info] 	published sql-to-csv-spark_2.11 to ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/jars/sql-to-csv-spark_2.11.jar
+[info] 	published sql-to-csv-spark_2.11 to ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/srcs/sql-to-csv-spark_2.11-sources.jar
+[info] 	published sql-to-csv-spark_2.11 to ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/docs/sql-to-csv-spark_2.11-javadoc.jar
+[info] 	published ivy to ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/ivys/ivy.xml
 [success] Total time: 1 s, completed Feb 18, 2019 7:58:21 PM
 ```
 
 * The above command generates JAR artefacts (mainly
-  `sql-to-csv-spark_2.11.jar`) locally in the project `target` directory,
+  `sql-to-csv-spark_2.11-0.0.1-spark2.3.jar`) locally in the project `target` directory,
   as well as in the Maven and Ivy2 user repositories (`~/.m2` and
   `~/.ivy2` respectively).
 
@@ -252,20 +252,20 @@ model contains 8 documentable templates
 * Check that the artefacts have been produced
   + Locally (`package` command):
 ```bash
-$ ls -laFh target/scala-2.11/sql-to-csv-spark_2.11-0.0.1.jar 
--rw-r--r-- 1 USER GROUP 4.4K Feb 13 12:16 target/scala-2.11/sql-to-csv-spark_2.11-0.0.1.jar
+$ ls -laFh target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-spark2.3.jar 
+-rw-r--r-- 1 USER GROUP 4.4K Feb 13 12:16 target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-spark2.3.jar
 ```
 
   + In the local Maven repository (`publishM2` task):
 ```bash
-$ ls -laFh ~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1/sql-to-csv-spark_2.11-0.0.1.jar
--rw-r--r-- 1 USER GROUP 4.4K Feb 13 12:16 ~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1/sql-to-csv-spark_2.11-0.0.1.jar
+$ ls -laFh ~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/sql-to-csv-spark_2.11-0.0.1-spark2.3.jar
+-rw-r--r-- 1 USER GROUP 4.4K Feb 13 12:16 ~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/sql-to-csv-spark_2.11-0.0.1-spark2.3.jar
 ```
 
   + In the local Ivy2 repository (`publishLocal` task):
 ```bash
-$ ls -laFh ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1/jars/sql-to-csv-spark_2.11.jar
--rw-r--r-- 1 USER GROUP 4.4K Feb 13 12:16 ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1/jars/sql-to-csv-spark_2.11.jar
+$ ls -laFh ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/jars/sql-to-csv-spark_2.11.jar
+-rw-r--r-- 1 USER GROUP 4.4K Feb 13 12:16 ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/jars/sql-to-csv-spark_2.11.jar
 ```
 
 * Launch the job in the SBT JVM (the
@@ -280,7 +280,7 @@ $ sbt "runMain org.bom4v.ti.StandaloneQueryLauncher requests/hive-sql-to-csv-01-
 [info] Set current project to sql-to-csv-spark (in build file:~/dev/infra/spark-submit-sql/)
 [info] Running org.bom4v.ti.StandaloneQueryLauncher 
 ...
-Spark: 2.2.0
+Spark: 2.3.2
 Scala: version 2.11.12
 File-path for the SQL query: requests/hive-sql-to-csv-01-test.sql
 File-path for the expected CSV file: hive-generic.csv
@@ -299,7 +299,7 @@ SQL query:  select 1 as test
   + In local mode (for instance, on a laptop; that mode may not always work
     on the Spark/Hadoop clusters):
 ```bash
-$ pipenv run spark-submit --master local --class org.bom4v.ti.StandaloneQueryLauncher target/scala-2.11/sql-to-csv-spark_2.11-0.0.1.jar requests/hive-sql-to-csv-01-test.sql hive-generic.csv
+$ pipenv run spark-submit --master local --class org.bom4v.ti.StandaloneQueryLauncher target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-spark2.3.jar requests/hive-sql-to-csv-01-test.sql hive-generic.csv
 2019-02-18 20:22:46 INFO  SparkContext:54 - Running Spark version 2.4.0
 2019-02-18 20:22:46 INFO  SparkContext:54 - Submitted application: StandaloneQuerylauncher
 ...
@@ -317,7 +317,7 @@ SQL query:  select 1 as test
   + In Yarn cluster client mode with the standalone version (that method
     is basically the same as above):
 ```bash
-$ pipenv run spark-submit --num-executors 1 --executor-memory 512m --master yarn --deploy-mode client --class org.bom4v.ti.StandaloneQueryLauncher target/scala-2.11/sql-to-csv-spark_2.11-0.0.1.jar requests/hive-sql-to-csv-01-test.sql hive-generic.csv
+$ run spark-submit --num-executors 1 --executor-memory 512m --master yarn --deploy-mode client --class org.bom4v.ti.StandaloneQueryLauncher target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-spark2.3.jar requests/hive-sql-to-csv-01-test.sql hive-generic.csv
 ...
 Spark: 2.4.0
 Scala: version 2.11.12
@@ -329,16 +329,21 @@ SQL query:  select 1 as test
 
   + In Yarn cluster client mode with an actual Spark client request
     (for instance, on the Spark/Hadoop clusters;
-    that method needs a proper setup of those clusters in order to work):
+    that method needs a proper setup of those clusters in order to work,
+	including the `SPARK_HOME` or `YARN_CONF_DIR` environment variable set;
+	the `spark-submit` is not prefixed by `pipenv run` here because that
+	command is provided by the Spark cluster client tools, for instance
+	`/usr/hdp/current/spark2-client` on Hortonworks Hadoop distributions):
 ```bash
-$ pipenv run spark-submit --num-executors 1 --executor-memory 512m --master yarn --deploy-mode client --class org.bom4v.ti.SparkClusterQueryLauncher target/scala-2.11/sql-to-csv-spark_2.11-0.0.1.jar requests/hive-sql-to-csv-01-test.sql hive-generic.csv
+$ SPARK_HOME="/usr/hdp/current/spark2-client"
+$ spark-submit --num-executors 1 --executor-memory 512m --master yarn --deploy-mode client --class org.bom4v.ti.SparkClusterQueryLauncher target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-spark2.3.jar requests/hive-sql-to-csv-01-test.sql hive-generic.csv
 SPARK_MAJOR_VERSION is set to 2, using Spark2
-19/02/14 10:44:57 INFO SparkContext: Running Spark version 2.2.0.2.6.4.0-91
+19/02/14 10:44:57 INFO SparkContext: Running Spark version 2.3.2.2.6.4.0-91
 19/02/14 10:44:58 INFO SparkContext: Submitted application: SparkClusterQueryLauncher
 19/02/14 10:45:03 INFO Client: Submitting application application_1549030509994_0353 to ResourceManager
 19/02/14 10:45:03 INFO YarnClientImpl: Submitted application application_1549030509994_0353
 ...
-Spark: 2.2.0.2.6.4.0-91
+Spark: 2.3.2.2.6.4.0-91
 Scala: version 2.11.8
 ...
 19/02/14 10:45:20 INFO DAGScheduler: ResultStage 1 (show at QueryLauncher.scala:92) finished in 0.112 s
@@ -353,20 +358,39 @@ Scala: version 2.11.8
 19/02/14 10:45:22 INFO ShutdownHookManager: Shutdown hook called
 ```
 
+* A small Shell script,
+  [namely `tools/execQuery.sh`](https://github.com/bom4v/spark-submit-sql/blob/master/tools/execQuery.sh),
+  is available to ease the launch of those Spark jobs on Hadoop/Spark clusters:
+```bash
+$ ./tools/execQuery.sh -h
+Usage: ./tools/execQuery.sh <path-to-sql-script-file> <csv-output-data-file-on-hdfs>
+  - Default SQL script:      requests/hive-sql-to-csv-01-test.sql
+  - Default output CSV file: hive-generic.csv
+```
+That tool automatically downloads the Jar artefact if needed, and checks
+the `incoming` HDFS directory when the Spark job completes.
+
 * Check the resulting (compressed) CSV file.
-  On recent versions of Hadoop (_e.g._, 3.1.1), the data files produced
+  On recent versions of Hadoop (_e.g._, 3.1+), the data files produced
   by Spark are compressed (deflated in Hadoop parlance). After the merge
   process, they have to be uncompressed (inflated) before they can be read
   by a human being. An easy way to uncompress files is shown below thanks
-  to Perl (inspired from a
+  to Perl (inspired by a
   [post on StackOverflow](https://stackoverflow.com/questions/18759142/how-to-read-a-deflate-file-in-hadoop)):
 ```bash
+$ alias undeflate="perl -MCompress::Zlib -e 'undef $/; print uncompress(<>)'"
 $ hdfs dfs -ls -h incoming/hive-generic.csv
 Found 1 items
 -rw-r--r--   3 USER GROUP  59 B 2019-02-14 13:27 incoming/hive-generic.csv
-$ hdfs dfs -tail incoming/hive-generic.csv|perl -MCompress::Zlib -e 'undef $/; print uncompress(<>)'
+$ hdfs dfs -tail incoming/hive-generic.csv | undeflate
 1
-$ hdfs dfs -cat incoming/hive-generic.csv|perl -MCompress::Zlib -e 'undef $/; print uncompress(<>)'|wc -l
+$ hdfs dfs -cat incoming/hive-generic.csv | undeflate | wc -l
 1
+```
+
+* For bigger files (_e.g._, hundreds of GB), you may want to recompress
+  the file on the fly, for instance:
+```bash
+$ hdfs dfs -cat incoming/hive-generic-big-file.csv | undeflate | bzip2 -c | hdfs dfs -put - incoming/hive-generic-big-file.csv.bz2
 ```
 
