@@ -50,6 +50,7 @@ object SparkClusterQueryLauncher extends App {
     .builder()
     .appName("SparkClusterQueryLauncher")
     .enableHiveSupport()
+    .config("hive.exec.compress.output", "false")
     .getOrCreate()
 
   //
