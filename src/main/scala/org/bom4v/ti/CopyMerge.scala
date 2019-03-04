@@ -17,7 +17,7 @@ object UtilityForHadoop3 {
     * Re-implementation of the Hadoop CopyMerge() method,
     * which has been removed in Hadoop 3
     */
-  def copyMerge (srcFS: FileSystem, srcDir: Path,
+  def copyMergeOldWay (srcFS: FileSystem, srcDir: Path,
     dstFS: FileSystem, dstFile: Path,
     deleteSource: Boolean, conf: Configuration): Boolean = {
 
@@ -29,14 +29,71 @@ object UtilityForHadoop3 {
     if (srcFS.getFileStatus(srcDir).isDirectory()) {
 
       val outputFile = dstFS.create(dstFile)
-      Try {
+      scala.util.Try {
         srcFS
           .listStatus (srcDir)
           .sortBy (_.getPath.getName)
           .collect {
           case status if status.isFile() =>
             val inputFile = srcFS.open (status.getPath())
-            Try (IOUtils.copyBytes(inputFile, outputFile, conf, false))
+            scala.util.Try (IOUtils.copyBytes (inputFile, outputFile,
+              conf, false))
+            inputFile.close()
+        }
+      }
+      outputFile.close()
+
+      if (deleteSource) {
+        srcFS.delete (srcDir, true)
+
+      } else true
+
+    } else false
+
+  }
+
+  /**
+    * Re-implementation of the Hadoop CopyMerge() method,
+    * which has been removed in Hadoop 3.
+    * https://www.oreilly.com/library/view/hadoop-the-definitive/9780596521974/ch04.html
+    * That implementation checks for the compression codec,
+    * and decompresses the input files based on that codec.
+    * The output file is compressed with BZip2
+    */
+  def copyMerge (
+    srcFS: org.apache.hadoop.fs.FileSystem,
+    srcDir: org.apache.hadoop.fs.Path,
+    dstFS: org.apache.hadoop.fs.FileSystem,
+    dstFile: org.apache.hadoop.fs.Path,
+    deleteSource: Boolean,
+    hadoopConfig: org.apache.hadoop.conf.Configuration
+  ): Boolean =  {
+    if (dstFS.exists (dstFile)) {
+      throw new IOException(s"Target $dstFile already exists")
+    }
+
+    // Source path is expected to be a directory:
+    if (srcFS.getFileStatus(srcDir).isDirectory()) {
+
+      val factory = new org.apache.hadoop.io.compress.
+        CompressionCodecFactory (hadoopConfig)
+      val bzCodec = new org.apache.hadoop.io.compress.BZip2Codec()
+      bzCodec.setConf (hadoopConfig)
+
+      val outputFile = dstFS.create (dstFile)
+      val outputStream = bzCodec.createOutputStream (outputFile)
+      scala.util.Try {
+        srcFS
+          .listStatus (srcDir)
+          .sortBy (_.getPath.getName)
+          .collect {
+          case status if status.isFile() =>
+            val srcPath = status.getPath()
+            val codec = factory.getCodec (srcPath)
+            val inputFile = srcFS.open (srcPath)
+            val inputStream = codec.createInputStream (inputFile)
+            scala.util.Try (org.apache.hadoop.io.
+              IOUtils.copyBytes (inputStream, outputStream, hadoopConfig, false))
             inputFile.close()
         }
       }

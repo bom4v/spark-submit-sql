@@ -75,6 +75,24 @@ object Utilities {
   }
 
   /**
+    * Sandbox
+    * https://www.oreilly.com/library/view/hadoop-the-definitive/9780596521974/ch04.html
+    */
+  def mergeNewWay (srcPathStr: String, dstPathStr: String): Unit = {
+    val hadoopConfig = new org.apache.hadoop.conf.Configuration()
+    val hdfs = org.apache.hadoop.fs.FileSystem.get (hadoopConfig)
+    val dstPath = new org.apache.hadoop.fs.Path (dstPathStr)
+    val outputFile = hdfs.create (dstPath)
+    val srcPath = new org.apache.hadoop.fs.Path (srcPathStr)
+    val factory = new org.apache.hadoop.io.compress.
+      CompressionCodecFactory (hadoopConfig)
+    val codec = factory.getCodec (srcPath)
+    val inputStream = codec.createInputStream (hdfs.open(srcPath))
+    org.apache.hadoop.io.
+      IOUtils.copyBytes (inputStream, outputFile, hadoopConfig, false)
+  }
+
+  /**
     * Extract the SQL query from a file
     */
   def extractQuery (srcPath: String): String = {

@@ -6,7 +6,7 @@ organizationName := "Business Object Models for Verticals (BOM4V)"
 
 organizationHomepage := Some(url("http://github.com/bom4v"))
 
-version := "0.0.1-spark2.3"
+version := "0.0.2-spark2.3"
 
 homepage := Some(url("https://github.com/bom4v/spark-submit-sql"))
 
