@@ -94,10 +94,10 @@ object UtilityForHadoop3 {
             val inputStream = codec.createInputStream (inputFile)
             scala.util.Try (org.apache.hadoop.io.
               IOUtils.copyBytes (inputStream, outputStream, hadoopConfig, false))
-            inputFile.close()
+            inputStream.close()
         }
       }
-      outputFile.close()
+      outputStream.close()
 
       if (deleteSource) {
         srcFS.delete (srcDir, true)
