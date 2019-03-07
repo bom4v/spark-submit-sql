@@ -68,10 +68,11 @@ object Utilities {
     // into the new output
     val hadoopConfig = new org.apache.hadoop.conf.Configuration()
     val hdfs = org.apache.hadoop.fs.FileSystem.get (hadoopConfig)
+    val shouldDelete = false
     UtilityForHadoop3
       .copyMerge (hdfs, new org.apache.hadoop.fs.Path (srcPath),
       hdfs, new org.apache.hadoop.fs.Path (dstPath),
-      true, hadoopConfig)
+      shouldDelete, hadoopConfig)
   }
 
   /**
