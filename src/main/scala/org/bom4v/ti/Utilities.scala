@@ -50,7 +50,7 @@ object Utilities {
     */
   def getOutputCSVFilePath (defaultFilePath:String, args:Array[String]):String= {
     var csvFile : String = defaultFilePath
-    val csvFilePattern = new scala.util.matching.Regex ("[.]csv$")
+    val csvFilePattern = new scala.util.matching.Regex ("[.]csv(|.bz2)$")
     for (filePath <- args) {
       val csvMatch = csvFilePattern.findFirstIn (filePath)
       csvMatch.foreach { _ =>
