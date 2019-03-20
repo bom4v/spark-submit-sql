@@ -82,19 +82,26 @@ object UtilityForHadoop3 {
 
       val outputFile = dstFS.create (dstFile)
       val outputStream = bzCodec.createOutputStream (outputFile)
+      val srcDirContent = srcFS.listStatus (srcDir).sortBy (_.getPath.getName)
+
       scala.util.Try {
-        srcFS
-          .listStatus (srcDir)
-          .sortBy (_.getPath.getName)
-          .collect {
+        srcDirContent.collect {
           case status if status.isFile() =>
             val srcPath = status.getPath()
-            val codec = factory.getCodec (srcPath)
-            val inputFile = srcFS.open (srcPath)
-            val inputStream = codec.createInputStream (inputFile)
-            scala.util.Try (org.apache.hadoop.io.
-              IOUtils.copyBytes (inputStream, outputStream, hadoopConfig, false))
-            inputStream.close()
+            val srcPathStr = srcPath.getName
+            val csvFilePattern = new scala.util.matching.Regex ("part-.*[.]csv(|[.]deflate)$")
+            val csvMatch = csvFilePattern.findFirstIn (srcPathStr)
+            csvMatch.foreach { _ =>
+              // println ("Will uncompress " + srcPathStr)
+              val codec = factory.getCodec (srcPath)
+              val inputFile = srcFS.open (srcPath)
+              val inputStream = codec.createInputStream (inputFile)
+              scala.util.Try {
+                org.apache.hadoop.io.
+                  IOUtils.copyBytes (inputStream, outputStream, hadoopConfig, false)
+              }
+              inputStream.close()
+            }
         }
       }
       outputStream.close()

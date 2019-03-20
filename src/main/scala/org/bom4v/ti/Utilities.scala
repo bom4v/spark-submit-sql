@@ -62,26 +62,28 @@ object Utilities {
 
   /**
     * Merge several file chunks into a single output file
+    * https://www.oreilly.com/library/view/hadoop-the-definitive/9780596521974/ch04.html
     */
   def merge (srcPath: String, dstPath: String): Unit = {
     // The "true" setting deletes the source files once they are merged
     // into the new output
     val hadoopConfig = new org.apache.hadoop.conf.Configuration()
     val hdfs = org.apache.hadoop.fs.FileSystem.get (hadoopConfig)
-    val shouldDelete = false
+    val shouldDelete = true
     UtilityForHadoop3
       .copyMerge (hdfs, new org.apache.hadoop.fs.Path (srcPath),
-      hdfs, new org.apache.hadoop.fs.Path (dstPath),
-      shouldDelete, hadoopConfig)
+        hdfs, new org.apache.hadoop.fs.Path (dstPath),
+        shouldDelete, hadoopConfig)
   }
 
   /**
-    * Sandbox
-    * https://www.oreilly.com/library/view/hadoop-the-definitive/9780596521974/ch04.html
+    * Sandbox to interactively debug with spark-shell
     */
   def mergeNewWay (srcPathStr: String, dstPathStr: String): Unit = {
     val hadoopConfig = new org.apache.hadoop.conf.Configuration()
     val hdfs = org.apache.hadoop.fs.FileSystem.get (hadoopConfig)
+    val srcFS = hdfs
+    val dstFS = hdfs
     val dstPath = new org.apache.hadoop.fs.Path (dstPathStr)
     val outputFile = hdfs.create (dstPath)
     val srcPath = new org.apache.hadoop.fs.Path (srcPathStr)
