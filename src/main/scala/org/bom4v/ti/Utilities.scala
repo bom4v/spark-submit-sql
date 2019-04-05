@@ -29,16 +29,37 @@ object Utilities {
   }
 
   /**
+    * Extract the Hive database name, potentially given as
+    * command line parameter
+    */
+  def getDBName (
+    defaultDBName: String,
+    argList: Array[String]): String = {
+    var dbName : String = defaultDBName
+    val dbNamePattern = new scala.util.matching.Regex ("^[a-zA-Z0-9.]+$")
+    for (arg <- argList) {
+      val dbNameMatch = dbNamePattern.findFirstIn (arg)
+      dbNameMatch.foreach { _ =>
+        dbName = arg
+      }
+    }
+    return dbName
+  }
+
+  /**
     * Extract the file-path of the SQL query, potentially given as
     * command line parameter
     */
-  def getQueryFilePath (defaultFilePath: String, args: Array[String]): String= {
+  def getQueryFilePath (
+    defaultFilePath: String,
+    argList: Array[String]): String= {
+
     var queryFile : String = defaultFilePath
     val sqlFilePattern = new scala.util.matching.Regex ("[.]sql$")
-    for (filePath <- args) {
-      val sqlMatch = sqlFilePattern.findFirstIn (filePath)
+    for (arg <- argList) {
+      val sqlMatch = sqlFilePattern.findFirstIn (arg)
       sqlMatch.foreach { _ =>
-        queryFile = filePath
+        queryFile = arg
       }
     }
     return queryFile
@@ -48,13 +69,16 @@ object Utilities {
     * Extract the file-path of the expected output CSV file,
     * potentially given as command line parameter
     */
-  def getOutputCSVFilePath (defaultFilePath:String, args:Array[String]):String= {
+  def getOutputCSVFilePath (
+    defaultFilePath:String,
+    argList:Array[String]): String= {
+
     var csvFile : String = defaultFilePath
     val csvFilePattern = new scala.util.matching.Regex ("[.]csv(|.bz2)$")
-    for (filePath <- args) {
-      val csvMatch = csvFilePattern.findFirstIn (filePath)
+    for (arg <- argList) {
+      val csvMatch = csvFilePattern.findFirstIn (arg)
       csvMatch.foreach { _ =>
-        csvFile = filePath
+        csvFile = arg
       }
     }
     return csvFile
