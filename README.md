@@ -44,6 +44,22 @@ tools:
   which are not CLI tools, and which have some limitations here again
   on the number of records that can be extracted from the Hive database
 
+From [version 3 of the Hortonworks Data Platform (HDP)](https://docs.hortonworks.com/HDPDocuments/HDP3/HDP-3.1.0/index.html),
+Hive needs a specific connector developed by Hortonworks, namely
+[Spark LLAP](https://github.com/hortonworks-spark/spark-llap),
+also known as (aka)
+[Hive Warehouse Connector (HWC)](https://docs.hortonworks.com/HDPDocuments/HDP3/HDP-3.1.0/integrating-hive/content/hive_hivewarehouseconnector_for_handling_apache_spark_data.html).
+The JAR artefacts are available on
+[Hortonworks own public Maven repository](http://repo.hortonworks.com/content/repositories/releases/com/hortonworks/hive/hive-warehouse-connector_2.11/),
+with a dependency on
+[Hadoop AWS](https://hadoop.apache.org/docs/current/hadoop-aws/tools/hadoop-aws/index.html),
+for which the pure Java artefacts are available on
+[Maven central repository](https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/).
+For some reason, SBT seems to have difficulties to resolve
+the pure Java dependencies on that Hadoop AWS component, and there is
+therefore an explicit dependency statement in the
+[`build.sbt` file](https://github.com/bom4v/spark-submit-sql/blob/master/build.sbt).
+
 # Installation
 
 ## Short version
