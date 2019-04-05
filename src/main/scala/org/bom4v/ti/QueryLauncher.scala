@@ -41,6 +41,47 @@ object StandaloneQueryLauncher extends App {
 }
 
 /**
+  * Spark job aimed at being launched in a standalone mode,
+  * for instance within the SBT JVM
+  */
+object StandaloneHDP3QueryLauncher extends App {
+  //
+  val spark = org.apache.spark.sql.SparkSession
+    .builder()
+    .appName("StandaloneQuerylauncher")
+    .master("local[*]")
+    .getOrCreate()
+
+  //
+  Utilities.displayVersions (spark)
+
+  //
+  val defaultHiveDBName = "sandbox"
+  val defaultQueryFile = "requests/hive-sql-to-csv-01-test.sql"
+  val defaultCSVFile = "hive-generic.csv"
+
+  // Retrieve the name of the Hive database to connect to
+  val hiveDBName = Utilities.getDBName (defaultHiveDBName, args)
+  println ("Hive database: '" + hiveDBName + "'")
+
+  // Retrieve the filename of the SQL query, if given as command line parameter
+  val queryFile = Utilities.getQueryFilePath (defaultQueryFile, args)
+  println ("File-path for the SQL query: " + queryFile)
+
+  // Retrieve the expected filename of the resulting CSV file,
+  // if given as command line parameter
+  val outputCSVFile = Utilities.getOutputCSVFilePath (defaultCSVFile, args)
+  println ("File-path for the expected CSV file: " + outputCSVFile)
+
+  // Extract the SQL query from the given file
+  val sqlQuery = Utilities.extractQuery (queryFile)
+  println ("SQL query: " + sqlQuery)
+
+  // End of the Spark session
+  spark.stop()
+}
+
+/**
   * Spark job aimed at being launched on a Spark cluster,
   * typically with YARN or Mesos
   */
