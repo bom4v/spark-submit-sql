@@ -36,7 +36,7 @@ object Utilities {
     defaultDBName: String,
     argList: Array[String]): String = {
     var dbName : String = defaultDBName
-    val dbNamePattern = new scala.util.matching.Regex ("^[a-zA-Z0-9.]+$")
+    val dbNamePattern = new scala.util.matching.Regex ("^[a-zA-Z0-9_]+$")
     for (arg <- argList) {
       val dbNameMatch = dbNamePattern.findFirstIn (arg)
       dbNameMatch.foreach { _ =>
