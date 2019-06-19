@@ -134,6 +134,7 @@ object SparkClusterQueryLauncher extends App {
   hiveDF.write
         .format ("com.databricks.spark.csv")
         .option ("header", "false")
+        .option ("sep", "^")
         .mode ("overwrite")
         .save (tmpDir)
   Utilities.merge (tmpDir, hdfsDataFilepath)
@@ -217,6 +218,7 @@ object SparkClusterHDP3QueryLauncher extends App {
   hiveDF.write
         .format ("com.databricks.spark.csv")
         .option ("header", "false")
+        .option ("sep", "^")
         .mode ("overwrite")
         .save (tmpDir)
   Utilities.merge (tmpDir, hdfsDataFilepath)

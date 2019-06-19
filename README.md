@@ -2,7 +2,7 @@ SQL to CSV for Hive
 ===================
 
 [![Maven Central](https://img.shields.io/maven-central/v/org.bom4v.ti/sql-to-csv-spark_2.11.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22org.bom4v.ti%22%20AND%20a:%22sql-to-csv-spark_2.11%22)
-[![Javadocs](http://www.javadoc.io/badge/org.apache.camel/apache-camel.svg?color=brightgreen)](https://www.javadoc.io/doc/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.3-spark2.3-hive3hdp)
+[![Javadocs](http://www.javadoc.io/badge/org.apache.camel/apache-camel.svg?color=brightgreen)](https://www.javadoc.io/doc/org.bom4v.ti/sql-to-csv-spark_2.11/)
 
 # Reference
 * [How to install Python virtual environments with Pyenv and `pipenv`](http://github.com/machine-learning-helpers/induction-python/tree/master/installation/virtual-env)
@@ -69,11 +69,14 @@ therefore an explicit dependency statement in the
 # Installation
 
 ## Short version
-Just add the dependency on `sql-to-csv-spark` in the SBT project
-configuration (typically, `build.sbt` in the project root directory):
+* Just add the dependency on `sql-to-csv-spark` in the SBT project
+  configuration (typically, `build.sbt` in the project root directory):
 ```scala
-libraryDependencies += "org.bom4v.ti" %% "sql-to-csv-spark" % "0.0.3-spark2.3-hive3hdp"
+libraryDependencies += "org.bom4v.ti" %% "sql-to-csv-spark" % "0.0.4-spark2.3-hive3hdp"
 ```
+
+* The JAR artefacts are [available on the Maven central
+  repository](https://repo1.maven.org/maven2/org/bom4v/ti/sql-to-csv-spark_2.11/)
 
 ## Details
 A convenient way to get the Spark ecosystem and CLI tools (_e.g._,
