@@ -1,3 +1,9 @@
+SQL to CSV for Hive
+===================
+
+[![Maven Central](https://img.shields.io/maven-central/v/org.bom4v.ti/sql-to-csv-spark_2.11.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22org.bom4v.ti%22%20AND%20a:%22sql-to-csv-spark_2.11%22)
+[![Javadocs](http://www.javadoc.io/badge/org.apache.camel/apache-camel.svg?color=brightgreen)](https://www.javadoc.io/doc/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.3-spark2.3-hive3hdp)
+
 # Reference
 * [How to install Python virtual environments with Pyenv and `pipenv`](http://github.com/machine-learning-helpers/induction-python/tree/master/installation/virtual-env)
 
@@ -66,7 +72,7 @@ therefore an explicit dependency statement in the
 Just add the dependency on `sql-to-csv-spark` in the SBT project
 configuration (typically, `build.sbt` in the project root directory):
 ```scala
-libraryDependencies += "org.bom4v.ti" %% "sql-to-csv-spark" % "0.0.1-spark2.3"
+libraryDependencies += "org.bom4v.ti" %% "sql-to-csv-spark" % "0.0.3-spark2.3-hive3hdp"
 ```
 
 ## Details
