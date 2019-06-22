@@ -122,13 +122,14 @@ object Utilities {
   /**
     * Extract the SQL query from a file
     */
-  def extractQuery (srcPath: String): String = {
-    var queryString = ""
-    try {
+  def extractQueryFromBufferedSource (
+    bufferedSource: scala.io.BufferedSource,
+    srcPath: String) : String = {
 
-      // Get a handle on the file, so that it can be properly closed
-      // when no longer used
-      val bufferedSource = scala.io.Source.fromFile (srcPath)
+    //
+    var queryString = ""
+
+    try {
 
       // Pattern/RegEx for SQL comments (anything beginning with "--")
       val commentPattern = new scala.util.matching.Regex ("[-]{2}.*$")
@@ -151,7 +152,6 @@ object Utilities {
       }
 
       //queryString = bufferedSource.getLines.mkString
-      bufferedSource.close
 
     } catch {
       case e: java.io.FileNotFoundException
@@ -161,6 +161,39 @@ object Utilities {
             + "' file")
     }
 
+    return queryString      
+  }
+
+  /**
+    * Extract the SQL query from a file
+    */
+  def extractQueryFromResources (srcPath: String): String = {
+    // Get a handle on the file, so that it can be properly closed
+    // when no longer used
+    val queryInputStream: java.io.InputStream =
+      getClass.getResourceAsStream ("/" + srcPath)
+    val bufferedSource: scala.io.BufferedSource =
+      scala.io.Source.fromInputStream (queryInputStream)
+
+    val queryString = extractQueryFromBufferedSource (bufferedSource, srcPath)
+    bufferedSource.close
+
+    //
+    return queryString
+  }
+
+  /**
+    * Extract the SQL query from a file
+    */
+  def extractQuery (srcPath: String): String = {
+    // Get a handle on the file, so that it can be properly closed
+    // when no longer used
+    val bufferedSource = scala.io.Source.fromFile (srcPath)
+
+    val queryString = extractQueryFromBufferedSource (bufferedSource, srcPath)
+    bufferedSource.close
+
+    //
     return queryString
   }
 

@@ -72,7 +72,7 @@ therefore an explicit dependency statement in the
 * Just add the dependency on `sql-to-csv-spark` in the SBT project
   configuration (typically, `build.sbt` in the project root directory):
 ```scala
-libraryDependencies += "org.bom4v.ti" %% "sql-to-csv-spark" % "0.0.4-spark2.3-hive3hdp"
+libraryDependencies += "org.bom4v.ti" %% "sql-to-csv-spark" % "0.0.5-spark2.3-hive3hdp"
 ```
 
 * The JAR artefacts are [available on the Maven central
@@ -193,7 +193,7 @@ Alternatively, run a command inside the virtualenv with pipenv run.
 * Download the application JAR artefact from a
   [Maven repository](https://repo1.maven.org/maven2/):
 ```bash
-$ wget https://oss.sonatype.org/content/groups/public/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/sql-to-csv-spark_2.11-0.0.1-spark2.3.jar
+$ wget https://oss.sonatype.org/content/groups/public/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.5-spark2.3-hive3hdp/sql-to-csv-spark_2.11-0.0.5-spark2.3-hive3hdp.jar
 ```
 
 * Launch the JAR application by specifying the input file with the SQL query
@@ -202,8 +202,12 @@ $ wget https://oss.sonatype.org/content/groups/public/org/bom4v/ti/sql-to-csv-sp
 $ cat > sqlQuery.sql << _EOF
 select 1 as testFlag
 _EOF
-$ spark-submit --master yarn --deploy-mode client --class org.bom4v.ti.StandaloneQueryLauncher sql-to-csv-spark_2.11-0.0.1-spark2.3.jar sqlQuery.sql output.csv
-$ spark-submit --master yarn --deploy-mode client --class org.bom4v.ti.SparkClusterQueryLauncher sql-to-csv-spark_2.11-0.0.1-spark2.3.jar sqlQuery.sql output.csv
+$ spark-submit --master yarn --deploy-mode client \
+  --class org.bom4v.ti.StandaloneQueryLauncher \
+  sql-to-csv-spark_2.11-0.0.5-spark2.3-hive3hdp.jar sqlQuery.sql output.csv
+$ spark-submit --master yarn --deploy-mode client \
+  --class org.bom4v.ti.SparkClusterQueryLauncher \
+  sql-to-csv-spark_2.11-0.0.5-spark2.3-hive3hdp.jar sqlQuery.sql output.csv
 $ hdfs dfs -get incoming/output.csv
 $ hdfs dfs -rm -skipTrash incoming/output.csv
 $ cat output.csv
@@ -234,40 +238,40 @@ $ sbt 'set isSnapshot := true' compile package publishM2 publishLocal
 [info] Done compiling.
 [success] Total time: 10 s, completed Feb 18, 2019 7:58:17 PM
 [warn] Multiple main classes detected.  Run 'show discoveredMainClasses' to see the list
-[info] Packaging ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-spark2.3.jar ...
+[info] Packaging ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.5-spark2.3-hive3hdp.jar ...
 [info] Done packaging.
 [success] Total time: 1 s, completed Feb 18, 2019 7:58:18 PM
-[info] Packaging ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-spark2.3-sources.jar ...
+[info] Packaging ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.5-spark2.3-hive3hdp-sources.jar ...
 [info] Done packaging.
-[info] Wrote ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-spark2.3.pom
+[info] Wrote ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.5-spark2.3-hive3hdp.pom
 [info] Main Scala API documentation to ~/dev/infra/spark-submit-sql/target/scala-2.11/api...
 model contains 8 documentable templates
 [info] Main Scala API documentation successful.
-[info] Packaging ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-spark2.3-javadoc.jar ...
+[info] Packaging ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.5-spark2.3-heive3hdp-javadoc.jar ...
 [info] Done packaging.
-[info] 	published sql-to-csv-spark_2.11 to file:~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/sql-to-csv-spark_2.11-0.0.1-spark2.3.pom
-[info] 	published sql-to-csv-spark_2.11 to file:~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/sql-to-csv-spark_2.11-0.0.1-spark2.3.jar
-[info] 	published sql-to-csv-spark_2.11 to file:~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/sql-to-csv-spark_2.11-0.0.1-spark2.3-sources.jar
-[info] 	published sql-to-csv-spark_2.11 to file:~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/sql-to-csv-spark_2.11-0.0.1-spark2.3-javadoc.jar
+[info] 	published sql-to-csv-spark_2.11 to file:~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.5-spark2.3-hive3hdp/sql-to-csv-spark_2.11-0.0.5-spark2.3-hive3hdp.pom
+[info] 	published sql-to-csv-spark_2.11 to file:~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.5-spark2.3-hive3hdp/sql-to-csv-spark_2.11-0.0.5-spark2.3-hive3hdp.jar
+[info] 	published sql-to-csv-spark_2.11 to file:~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.5-spark2.3-hive3hdp/sql-to-csv-spark_2.11-0.0.5-spark2.3-hive3hdp-sources.jar
+[info] 	published sql-to-csv-spark_2.11 to file:~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.5-spark2.3-hive3hdp/sql-to-csv-spark_2.11-0.0.5-spark2.3-hive3hdp-javadoc.jar
 [success] Total time: 2 s, completed Feb 18, 2019 7:58:19 PM
-[info] Wrote ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-spark2.3.pom
+[info] Wrote ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.5-spark2.3-hive3hdp.pom
 [info] Main Scala API documentation to ~/dev/infra/spark-submit-sql/target/scala-2.11/api...
 model contains 8 documentable templates
 [info] Main Scala API documentation successful.
-[info] Packaging ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-spark2.3-javadoc.jar ...
+[info] Packaging ~/dev/infra/spark-submit-sql/target/scala-2.11/sql-to-csv-spark_2.11-0.0.5-spark2.3-hive3hdp-javadoc.jar ...
 [info] Done packaging.
-[info] :: delivering :: org.bom4v.ti#sql-to-csv-spark_2.11;0.0.1-spark2.3 :: 0.0.1-spark2.3 :: integration :: Mon Feb 18 19:58:21 CET 2019
+[info] :: delivering :: org.bom4v.ti#sql-to-csv-spark_2.11;0.0.5-spark2.3-hive3hdp :: 0.0.5-spark2.3-hive3hdp :: integration :: Mon Feb 18 19:58:21 CET 2019
 [info] 	delivering ivy file to ~/dev/infra/spark-submit-sql/target/scala-2.11/ivy-0.0.1-spark2.3.xml
-[info] 	published sql-to-csv-spark_2.11 to ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/poms/sql-to-csv-spark_2.11.pom
-[info] 	published sql-to-csv-spark_2.11 to ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/jars/sql-to-csv-spark_2.11.jar
-[info] 	published sql-to-csv-spark_2.11 to ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/srcs/sql-to-csv-spark_2.11-sources.jar
-[info] 	published sql-to-csv-spark_2.11 to ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/docs/sql-to-csv-spark_2.11-javadoc.jar
-[info] 	published ivy to ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/ivys/ivy.xml
+[info] 	published sql-to-csv-spark_2.11 to ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.5-spark2.3-hive3hdp/poms/sql-to-csv-spark_2.11.pom
+[info] 	published sql-to-csv-spark_2.11 to ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.5-spark2.3-hive3hdp/jars/sql-to-csv-spark_2.11.jar
+[info] 	published sql-to-csv-spark_2.11 to ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.5-spark2.3-hive3hdp/srcs/sql-to-csv-spark_2.11-sources.jar
+[info] 	published sql-to-csv-spark_2.11 to ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.5-spark2.3-hive3hdp/docs/sql-to-csv-spark_2.11-javadoc.jar
+[info] 	published ivy to ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.5-spark2.3-hive3hdp/ivys/ivy.xml
 [success] Total time: 1 s, completed Feb 18, 2019 7:58:21 PM
 ```
 
 * The above command generates JAR artefacts (mainly
-  `sql-to-csv-spark_2.11-0.0.1-spark2.3.jar`) locally in the project `target` directory,
+  `sql-to-csv-spark_2.11-0.0.5-spark2.3-hive3hdp.jar`) locally in the project `target` directory,
   as well as in the Maven and Ivy2 user repositories (`~/.m2` and
   `~/.ivy2` respectively).
 
@@ -277,20 +281,20 @@ model contains 8 documentable templates
 * Check that the artefacts have been produced
   + Locally (`package` command):
 ```bash
-$ ls -laFh target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-spark2.3.jar 
--rw-r--r-- 1 USER GROUP 4.4K Feb 13 12:16 target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-spark2.3.jar
+$ ls -laFh target/scala-2.11/sql-to-csv-spark_2.11-0.0.5-spark2.3-hive3hdp.jar 
+-rw-r--r-- 1 USER GROUP 4.4K Feb 13 12:16 target/scala-2.11/sql-to-csv-spark_2.11-0.0.5-spark2.3-hive3hdp.jar
 ```
 
   + In the local Maven repository (`publishM2` task):
 ```bash
-$ ls -laFh ~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/sql-to-csv-spark_2.11-0.0.1-spark2.3.jar
--rw-r--r-- 1 USER GROUP 4.4K Feb 13 12:16 ~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/sql-to-csv-spark_2.11-0.0.1-spark2.3.jar
+$ ls -laFh ~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.5-spark2.3-hive3hdp/sql-to-csv-spark_2.11-0.0.5-spark2.3-hive3hdp.jar
+-rw-r--r-- 1 USER GROUP 4.4K Feb 13 12:16 ~/.m2/repository/org/bom4v/ti/sql-to-csv-spark_2.11/0.0.5-spark2.3-hive3hdp/sql-to-csv-spark_2.11-0.0.5-spark2.3-hive3hdp.jar
 ```
 
   + In the local Ivy2 repository (`publishLocal` task):
 ```bash
-$ ls -laFh ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/jars/sql-to-csv-spark_2.11.jar
--rw-r--r-- 1 USER GROUP 4.4K Feb 13 12:16 ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.1-spark2.3/jars/sql-to-csv-spark_2.11.jar
+$ ls -laFh ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.5-spark2.3-hive3hdp/jars/sql-to-csv-spark_2.11.jar
+-rw-r--r-- 1 USER GROUP 4.4K Feb 13 12:16 ~/.ivy2/local/org.bom4v.ti/sql-to-csv-spark_2.11/0.0.5-spark2.3-hive3hdp/jars/sql-to-csv-spark_2.11.jar
 ```
 
 * Launch the job in the SBT JVM (the
@@ -324,7 +328,10 @@ SQL query:  select 1 as test
   + In local mode (for instance, on a laptop; that mode may not always work
     on the Spark/Hadoop clusters):
 ```bash
-$ pipenv run spark-submit --master local --class org.bom4v.ti.StandaloneQueryLauncher target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-spark2.3.jar requests/hive-sql-to-csv-01-test.sql hive-generic.csv
+$ pipenv run spark-submit --master local \
+  --class org.bom4v.ti.StandaloneQueryLauncher \
+  target/scala-2.11/sql-to-csv-spark_2.11-0.0.5-spark2.3-hive3hdp.jar \
+  requests/hive-sql-to-csv-01-test.sql hive-generic.csv
 2019-02-18 20:22:46 INFO  SparkContext:54 - Running Spark version 2.4.0
 2019-02-18 20:22:46 INFO  SparkContext:54 - Submitted application: StandaloneQuerylauncher
 ...
@@ -342,7 +349,11 @@ SQL query:  select 1 as test
   + In Yarn cluster client mode with the standalone version (that method
     is basically the same as above):
 ```bash
-$ run spark-submit --num-executors 1 --executor-memory 512m --master yarn --deploy-mode client --class org.bom4v.ti.StandaloneQueryLauncher target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-spark2.3.jar requests/hive-sql-to-csv-01-test.sql hive-generic.csv
+$ pipenv run spark-submit --num-executors 1 --executor-memory 512m \
+  --master yarn --deploy-mode client \
+  --class org.bom4v.ti.StandaloneQueryLauncher \
+  target/scala-2.11/sql-to-csv-spark_2.11-0.0.5-spark2.3-hive3hdp.jar \
+  requests/hive-sql-to-csv-01-test.sql hive-generic.csv
 ...
 Spark: 2.4.0
 Scala: version 2.11.12
@@ -361,7 +372,11 @@ SQL query:  select 1 as test
 	`/usr/hdp/current/spark2-client` on Hortonworks Hadoop distributions):
 ```bash
 $ SPARK_HOME="/usr/hdp/current/spark2-client"
-$ spark-submit --num-executors 1 --executor-memory 512m --master yarn --deploy-mode client --class org.bom4v.ti.SparkClusterQueryLauncher target/scala-2.11/sql-to-csv-spark_2.11-0.0.1-spark2.3.jar requests/hive-sql-to-csv-01-test.sql hive-generic.csv
+$ spark-submit --num-executors 1 --executor-memory 512m \
+  --master yarn --deploy-mode client \
+  --class org.bom4v.ti.SparkClusterQueryLauncher \
+  target/scala-2.11/sql-to-csv-spark_2.11-0.0.5-spark2.3.jar \
+  requests/hive-sql-to-csv-01-test.sql hive-generic.csv
 SPARK_MAJOR_VERSION is set to 2, using Spark2
 19/02/14 10:44:57 INFO SparkContext: Running Spark version 2.3.2.2.6.4.0-91
 19/02/14 10:44:58 INFO SparkContext: Submitted application: SparkClusterQueryLauncher
