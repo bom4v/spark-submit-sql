@@ -46,6 +46,12 @@ libraryDependencies += "org.specs2" %% "specs2-core" % "4.4.1" % "test"
 
 // Spark
 libraryDependencies ++= (version.value match {
+  case v if v.contains("spark2.4") => Seq(
+    "org.apache.spark" %% "spark-core" % "2.4.0",
+    "org.apache.spark" %% "spark-sql" % "2.4.0",
+    "org.apache.spark" %% "spark-mllib" % "2.4.0",
+    "org.apache.spark" %% "spark-hive" % "2.4.0"
+  )
   case v if v.contains("spark2.3") => Seq(
     "org.apache.spark" %% "spark-core" % "2.3.2",
     "org.apache.spark" %% "spark-sql" % "2.3.2",
@@ -63,8 +69,12 @@ libraryDependencies ++= (version.value match {
 
 // Hortonworks HDP Hive 3
 libraryDependencies ++= (version.value match {
-  case v if v.contains("hive3hdp") => Seq(
-    "org.apache.hadoop" % "hadoop-aws" % "3.1.2",
+  case v if v.contains("spark2.4-hive3hdp") => Seq(
+    "org.apache.hadoop" % "hadoop-aws" % "3.1.1",
+    "com.hortonworks.hive" %% "hive-warehouse-connector" % "1.0.0.3.1.2.1-1"
+  )
+  case v if v.contains("spark2.3-hive3hdp") => Seq(
+    "org.apache.hadoop" % "hadoop-aws" % "3.1.1",
     "com.hortonworks.hive" %% "hive-warehouse-connector" % "1.0.0.3.0.2.1-8"
   )
   case _ => Seq()
